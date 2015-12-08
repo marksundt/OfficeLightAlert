@@ -29,9 +29,9 @@ void loop()
 {
   AmbientLightLux = Tsl2572ReadAmbientLight();
 
-  // Needed a value from 0-500 Lux office lighting (wikipedia)
+  // Needed a value from 100-500 Lux office lighting (wikipedia)
   // that would span 1-21 segments
-  light_segment = (int)AmbientLightLux/25;
+  light_segment = (int)AmbientLightLux/20;
 
   Serial.print("Ambient: ");
   Serial.println(AmbientLightLux);
@@ -40,12 +40,13 @@ void loop()
   
   if(light_segment <= 1) 
     {
+      LedOn(1);
       too_dark++;
-      LedOn(1);
-      delay(100);
-      LedOn(0);
-      delay(100);
-      LedOn(1);
+    }
+  else if(light_segment <= 6)
+    {
+      LedOn(light_segment);
+      too_dark++;
     }
   else if(light_segment > 21)
     {
@@ -60,14 +61,14 @@ void loop()
 
   if(too_dark > 5)
     {
-      ToDark();
+      TooDark();
     }
 
-  delay(10000);
+  delay(30000);
  };
 
 
-void ToDark()
+void TooDark()
 {
   // Five min notification
  Serial.println("Turn On Lights!");
