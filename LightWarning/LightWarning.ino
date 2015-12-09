@@ -43,7 +43,11 @@ void loop()
       LedOn(1);
       too_dark++;
     }
-  else if(light_segment <= 6)
+   // Office lights should be 350 to 500 
+   // 6 range is 120 to 140 lux
+   // 5 range is 100 to 120 lux
+   // 4 range is 80 to 100 lux
+  else if(light_segment <= 4)
     {
       LedOn(light_segment);
       too_dark++;
